@@ -1,6 +1,13 @@
 import { Request, Response, NextFunction } from "express";
 import { ZodError } from "zod";
 import { AuthError } from "../modules/auth/auth.service";
+import { OrgError } from "../modules/organizations/organization.service";
+import { ProjectError } from "../modules/projects/project.service";
+import { MemberError } from "../modules/members/member.service";
+
+// alongside the other checks
+
+
 
 export function errorHandler(
   err: unknown,
@@ -18,6 +25,19 @@ export function errorHandler(
   if (err instanceof AuthError) {
     return res.status(err.statusCode).json({ message: err.message });
   }
+
+  
+    if (err instanceof ProjectError) {
+      return res.status(err.statusCode).json({ message: err.message });
+    }
+
+  if (err instanceof OrgError) {
+    return res.status(err.statusCode).json({ message: err.message });
+  }
+
+  if (err instanceof MemberError) {
+  return res.status(err.statusCode).json({ message: err.message });
+}
 
   console.error(err);
   return res.status(500).json({

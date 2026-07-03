@@ -4,6 +4,10 @@ import cors from "cors";
 import helmet from "helmet";
 import authRoutes from "./modules/auth/auth.routes";
 import { errorHandler } from "./middleware/error-handler";
+import organizationRoutes from "./modules/organizations/organization.routes";
+import projectRoutes from "./modules/projects/project.routes";
+import memberRoutes from "./modules/members/member.routes";
+
 
 const app = express();
 app.use(helmet());
@@ -15,8 +19,11 @@ app.get("/health", (_req, res) => {
 });
 
 app.use("/api/auth", authRoutes);
+app.use("/api/organizations", organizationRoutes);
+app.use("/api", projectRoutes);
+app.use("/api", memberRoutes);
 
-// must be last — after all routes
+
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 4000;

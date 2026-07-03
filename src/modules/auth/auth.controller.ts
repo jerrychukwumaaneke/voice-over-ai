@@ -21,3 +21,7 @@ export async function login(req: Request, res: Response, next: NextFunction) {
     next(err);
   }
 }
+
+export async function me(req: Request, res: Response) {
+  res.status(200).json({ user: req.user });
+}
